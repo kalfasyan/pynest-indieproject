@@ -1,7 +1,7 @@
 Here are some ideas:
 
 1)
-    a)
+    a) Single-cell experiment
     Create cells
     Create Poisson noise spike trains
     Connect and find parameters (w_exc_noise, w_inh_noise, f_exc_noise, f_inh_noise) so that the neuron fires with an output rate of a 0.2 - 2 Hz
@@ -10,10 +10,13 @@ Here are some ideas:
         - some nest basics
         - extracting recorded data, plotting membrane potentials and raster plots
         - simple analysis
+
+    b) Parameter storage
+
+    Learning outcomes:
+        - Use simulation_parameters to store and retrieve parameters
         - parameter sweeps
 
-    b) use simulation_parameters to store and retrieve parameters
-    c) [maybe later] make a parameter sweep
 
 2)  
     a) Connect one cell to the other in a feed-forward manner
@@ -21,10 +24,18 @@ Here are some ideas:
     c) Install the BCPNN module and repeat
 
     Learning outcomes:
-        - get a feeling for the weights
+        - get a feeling for the weights between neurons
         - learn how to retrieve weights from NEST
         - plot the weight development depending on e.g. mean input/output spike distance
 
 
-3)  Create populations of cells and explore the dynamics of a modular network
+3)  Create populations of cells and explore the dynamics of a modular network consisting of several subpopulations.
+    A minicolumn is a small subpopulation of neurons that receive shared input.
+    Several minicolumns connect a common pool of inhibitory neurons which in turn provide inhibitory feedback to all minicolumns.
+
+    a) Set up the connectivity for one 'hypercolumn' (also called macro-column or a network motif)
+    b) Find parameters for w_exc_inh and w_inh_exc 
+
+
+
 
