@@ -1,0 +1,30 @@
+Here are some ideas:
+
+1)
+    a)
+    Create cells
+    Create Poisson noise spike trains
+    Connect and find parameters (w_exc_noise, w_inh_noise, f_exc_noise, f_inh_noise) so that the neuron fires with an output rate of a 0.2 - 2 Hz
+
+    Learning outcomes:
+        - some nest basics
+        - extracting recorded data, plotting membrane potentials and raster plots
+        - simple analysis
+        - parameter sweeps
+
+    b) use simulation_parameters to store and retrieve parameters
+    c) [maybe later] make a parameter sweep
+
+2)  
+    a) Connect one cell to the other in a feed-forward manner
+    b) Use some plasticity model (STDP) to modify the weights based on their spiking patterns
+    c) Install the BCPNN module and repeat
+
+    Learning outcomes:
+        - get a feeling for the weights
+        - learn how to retrieve weights from NEST
+        - plot the weight development depending on e.g. mean input/output spike distance
+
+
+3)  Create populations of cells and explore the dynamics of a modular network
+
