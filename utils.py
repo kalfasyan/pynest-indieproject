@@ -30,3 +30,13 @@ def find_files(folder, to_match):
             list_of_files.append(path)
     return list_of_files
 
+
+def load_params(param_fn):
+    """
+    To be called e.g. with sys.argv[1] to load parameter files from an existing directory (or the .json file)
+    """
+    if os.path.isdir(param_fn):
+        param_fn = os.path.abspath(param_fn) + '/Parameters/simulation_parameters.json'
+    params = json.load(file(param_fn, 'r')) 
+    return params
+
