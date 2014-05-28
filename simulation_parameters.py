@@ -45,6 +45,10 @@ class global_parameters(ParameterContainer.ParameterContainer):
         # ############################################################
         # C O N N E C T I V I T Y    P A R A M E T E R S
         # ############################################################
+        self.params['w_input_exc'] = 5.     # [nS] how strong the input is connected to the cell
+
+        """
+        # NOT YET USED
         self.params['p_ee'] = .0 # so far
         self.params['p_ei'] = .05 # each inh neuron will receive input from p_ei * n_exc neurons
         self.params['p_ie'] = .15 # each exc neuron will receive input from p_ie * n_inh neurons
@@ -59,7 +63,12 @@ class global_parameters(ParameterContainer.ParameterContainer):
         self.params['delay_ei'] = 1. # [ms]
         self.params['delay_ie'] = 1. # [ms]
         self.params['delay_ii'] = 1. # [ms]
+        """
 
+        # ##########################################
+        # N E U R O N A L     P A R A M E T E R S
+        # ##########################################
+        self.params['g_L'] = 16.6667        # [nS] leakage conductance, influences the integration time constant of the neuron membrane (tau_mem)
 
         
 
@@ -86,7 +95,9 @@ class global_parameters(ParameterContainer.ParameterContainer):
 
     def set_folder_names(self, folder_name=None):
 
-        folder_name = 'Output/'
+        if folder_name == None:
+            folder_name = 'Output/'
+        # else: it is a likely a parameter sweep and the folder name is set from 'outside' 
         assert(folder_name[-1] == '/'), 'ERROR: folder_name must end with a / '
 
         self.params['folder_name'] = folder_name

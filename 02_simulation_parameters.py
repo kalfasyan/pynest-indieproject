@@ -15,7 +15,7 @@ class Simulation(object):
 
     def create_cells(self):
         # C R E A T E  
-        self.nrns = nest.Create('iaf_cond_exp', self.params['n_nrns']) # iaf_cond_exp is the name of the neuron model
+        self.nrns = nest.Create('iaf_cond_exp', self.params['n_nrns'], params={'g_L' : self.params['g_L']}) # iaf_cond_exp is the name of the neuron model
         self.spike_source = nest.Create('spike_generator', self.params['n_nrns']) # this is the container for input signals
 
     def create_input_spiketrains(self):
@@ -26,12 +26,12 @@ class Simulation(object):
             self.spike_trains[i_] = np.round(self.spike_trains[i_], decimals=1) # required because of limited simulation time step resolution
             print 'Input spikes to cell %d:' % (i_), self.spike_trains[i_]
             nest.SetStatus([self.spike_source[i_]], {'spike_times' : self.spike_trains[i_]})
+        nest.Connect(self.spike_source, self.nrns, params={'weight': self.params['w_input_exc']})
 
     def record(self):
 
         # R E C O R D    S P I K E S
         spike_recorder = nest.Create('spike_detector', params={'to_file':True, 'label': self.params['exc_spikes_fn']})
-        nest.Connect(self.spike_source, self.nrns, params={'weight': 1.})
 
         # R E C O R D    V O L T A G E S
         voltmeter = nest.Create('multimeter', params={'record_from': ['V_m'], 'interval': self.params['dt_volt']})
@@ -48,8 +48,12 @@ if __name__ == '__main__':
 
         
     if len(sys.argv) == 2:
-        params = utils.load_params(os.path.abspath(sys.argv[1]))
+#        params = utils.load_params(os.path.abspath(sys.argv[1]))
         # load existing parameters
+        params_json = utils.load_params(os.path.abspath(sys.argv[1]))
+        params = utils.convert_to_NEST_conform_dict(params_json) 
+        # this is necessary because json stores information in unicode, but SLI (the NEST interpreter) does not understand unicode ...
+
     else:
         GP = simulation_parameters.global_parameters()
         params = GP.params

@@ -40,3 +40,19 @@ def load_params(param_fn):
     params = json.load(file(param_fn, 'r')) 
     return params
 
+
+def convert_to_NEST_conform_dict(json_dict):
+    testing_params = {}
+    for k in json_dict.keys():
+        if type(json_dict[k]) == type({}):
+            d = json_dict[k]
+            d_new = {}
+            for key in d.keys():
+                d_new[str(key)] = d[key]
+            testing_params[k] = d_new
+        elif type(json_dict[k]) == unicode:
+            testing_params[str(k)] = str(json_dict[k])
+        else:
+            testing_params[str(k)] = json_dict[k]
+    return testing_params
+
