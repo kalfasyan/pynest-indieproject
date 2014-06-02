@@ -10,7 +10,7 @@ import numpy as np
 n_nrns = 3      # number of neurons
 dt = 0.1        # simulation time step
 t_sim = 300.    # simulation time in [ms]
-w_ss_nrn= 5.    # weight for spike source --> neuron
+w_ss_nrn= 700.    # weight for spike source --> neuron
 # naming convention: w_[SOURCE]_[TARGET]
 
 
@@ -30,6 +30,7 @@ nest.SetKernelStatus({'data_path': output_folder, 'overwrite_files': True, 'reso
 nrns = nest.Create('iaf_cond_exp', n_nrns) # iaf_cond_exp is the name of the neuron model
 spike_source = nest.Create('spike_generator', n_nrns) # this is the container for input signals
 
+print 'NEST params:', nest.GetStatus(nrns)
 
 # D E F I N E    I N P U T 
 spike_trains = [None for i_ in xrange(n_nrns)]
@@ -39,10 +40,11 @@ for i_ in xrange(n_nrns):
     print 'Input spikes to cell %d:' % (i_), spike_trains[i_]
     nest.SetStatus([spike_source[i_]], {'spike_times' : spike_trains[i_]})
 
+nest.Connect(spike_source, nrns, params={'weight': w_ss_nrn})
 
 # R E C O R D    S P I K E S
 spike_recorder = nest.Create('spike_detector', params={'to_file':True, 'label': spike_fn_base})
-nest.Connect(spike_source, nrns, params={'weight': w_ss_nrn})
+nest.ConvergentConnect(nrns, spike_recorder)
 
 
 # R E C O R D    V O L T A G E S
