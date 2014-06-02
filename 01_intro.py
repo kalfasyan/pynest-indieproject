@@ -16,7 +16,7 @@ w_ss_nrn= 700.    # weight for spike source --> neuron
 
 # set file names
 spike_fn_base = 'spike_output'  # the base of the name to which spikes will be stored (nest always adds some magic stuff)
-output_folder = 'OutputData/'
+output_folder = '/home/yannis/Desktop/OutputData/'
 if not os.path.exists(output_folder):
     os.system('mkdir %s' % output_folder)
 volt_fn_base = 'volt_'
